@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 // import { authRouter, usersRouter, systemRouter } from './routes';
-// import { errorHandler } from './middlewares';
+import { errorHandler } from './middlewares';
 
 const app = express();
 
@@ -24,6 +24,6 @@ app.get('/check', (req, res) => {
   res.json({ ok: true });
 });
 
-// app.use(errorHandler);
+app.use(errorHandler);
 
 export default app;
