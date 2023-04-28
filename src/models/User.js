@@ -19,7 +19,7 @@ export default class User extends BaseModel {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    secoundName: {
+    secondName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -56,14 +56,11 @@ export default class User extends BaseModel {
     },
   };
 
-  // static setupScopes() {
-  //   this.addScope('data', () => ({
-  //     attributes: ['id', 'name', 'email',
-  //       'birthday', 'position', 'grade',
-  //       'workProject', 'phone', 'hobbies',
-  //       'hardSkills', 'description', 'progress',
-  //       'office', 'telegram',
-  //     ],
-  //   }));
-  // }
+  static setupScopes() {
+    this.addScope('data', () => ({
+      attributes: ['id', 'name', 'secondName',
+        'phone', 'photo', 'email',
+      ],
+    }));
+  }
 }

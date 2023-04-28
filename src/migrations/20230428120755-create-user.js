@@ -13,7 +13,7 @@ export async function up(queryInterface) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      secoundName: {
+      secondName: {
         type: DataTypes.STRING,
         allowNull: false,
       },

@@ -8,7 +8,7 @@ const {
 const sequelize = new Sequelize(database, username, password, configs);
 
 User.initialize(sequelize);
-// User.setupScopes();
+User.setupScopes();
 
 export {
   sequelize,
