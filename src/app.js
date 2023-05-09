@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import { authRouter, usersRouter } from './routes';
+import { authRouter, usersRouter, customersRouter } from './routes';
 import { errorHandler } from './middlewares';
 
 const app = express();
@@ -15,6 +15,7 @@ app.use(morgan('tiny'));
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/customers', customersRouter);
 
 app.get('/check', (req, res) => {
   console.log('TAKE A GET REQ');

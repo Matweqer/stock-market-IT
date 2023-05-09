@@ -56,6 +56,15 @@ export default class User extends BaseModel {
     },
   };
 
+  static associate(models) {
+    User.hasOne(models.customer, {
+      as: 'customer',
+      foreignKey: {
+        name: 'userId',
+      },
+    });
+  }
+
   static setupScopes() {
     this.addScope('data', () => ({
       attributes: ['id', 'name', 'secondName',
