@@ -7,11 +7,11 @@ async function getCustomers() {
   return customers;
 }
 
-async function createCustomer({ employment }) {
-  const customer = await Customer.create({
+async function createCustomer({ employment, userId }) {
+  return await Customer.create({
+    userId,
     employment,
   });
-  return customer;
 }
 
 async function getCustomerById({ id }) {

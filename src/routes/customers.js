@@ -4,7 +4,7 @@ import { wrap } from '../utils';
 import { CustomersController } from '../controllers';
 import { roles } from '../constants';
 import { authenticateToken, validateRequest } from '../middlewares';
-import { updateCustomer } from '../requests';
+import { createCustomer, updateCustomer } from '../requests';
 
 const customersRouter = Router();
 
@@ -15,6 +15,15 @@ customersRouter
     wrap(async (req, res) => {
       const customers = await CustomersController.getCustomers();
       res.json(customers);
+    }),
+  )
+  .post(
+    '/',
+    authenticateToken([roles.user, roles.admin]),
+    validateRequest(createCustomer),
+    wrap(async (req, res) => {
+      const customer = await CustomersController.createCustomer(req.body);
+      res.json(customer);
     }),
   )
   .get(
