@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 import { wrap } from '../utils';
-// import { UsersController } from '../controllers';
+import { CustomersController } from '../controllers';
 import { roles } from '../constants';
 import { authenticateToken, validateRequest } from '../middlewares';
-// import { updateUser } from '../requests';
+import { updateCustomer } from '../requests';
 
 const customersRouter = Router();
 
@@ -13,32 +13,32 @@ customersRouter
     '/',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      // const users = await UsersController.getUsers();
-      res.json();
+      const customers = await CustomersController.getCustomers();
+      res.json(customers);
     }),
   )
   .get(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      // const users = await UsersController.getUserById(req.params);
-      res.json();
+      const customer = await CustomersController.getCustomerById(req.params);
+      res.json(customer);
     }),
   )
   .patch(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
-    // validateRequest(updateUser),
+    validateRequest(updateCustomer),
     wrap(async (req, res) => {
-      // const user = await UsersController.updateUser(req);
-      res.json();
+      const customer = await CustomersController.updateCustomer(req);
+      res.json(customer);
     }),
   )
   .delete(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      // await UsersController.deleteUser(req);
+      await CustomersController.deleteCustomer(req);
       res.status(200).end();
     }),
   );

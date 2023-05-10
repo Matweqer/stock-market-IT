@@ -15,7 +15,7 @@ User.associate(sequelize.models);
 Customer.associate(sequelize.models);
 
 User.setupScopes();
-Customer.setupScopes();
+Customer.setupScopes(sequelize.models);
 
 export {
   sequelize,
