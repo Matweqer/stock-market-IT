@@ -48,7 +48,6 @@ export default class User extends BaseModel {
   };
 
   static Settings = {
-    // define validators, indexes, hooks and etc here
     hooks: {
       async beforeCreate(user) {
         user.id = uuid();
@@ -59,6 +58,12 @@ export default class User extends BaseModel {
   static associate(models) {
     User.hasOne(models.customer, {
       as: 'customer',
+      foreignKey: {
+        name: 'userId',
+      },
+    });
+    User.hasOne(models.executor, {
+      as: 'executor',
       foreignKey: {
         name: 'userId',
       },
