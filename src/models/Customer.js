@@ -35,6 +35,12 @@ export default class Customer extends BaseModel {
         name: 'userId',
       },
     });
+    Customer.hasMany(models.order, {
+      as: 'order',
+      foreignKey: {
+        name: 'customerId',
+      },
+    });
   }
 
   static setupScopes(models) {
