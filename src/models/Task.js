@@ -28,8 +28,8 @@ export default class Task extends BaseModel {
 
   static Settings = {
     hooks: {
-      async beforeCreate(customer) {
-        customer.id = uuid();
+      async beforeCreate(task) {
+        task.id = uuid();
       },
     },
   };
@@ -41,12 +41,12 @@ export default class Task extends BaseModel {
         name: 'customerId',
       },
     });
-    // Task.belongsTo(models.executor, {
-    //   as: 'executor',
-    //   foreignKey: {
-    //     name: 'executorId',
-    //   },
-    // });
+    Task.hasMany(models.request, {
+      as: 'requests',
+      foreignKey: {
+        name: 'taskId',
+      },
+    });
   }
 
   static setupScopes(models) {
@@ -55,8 +55,7 @@ export default class Task extends BaseModel {
       include: {
         model: models.customer,
         as: 'customer',
-        attributes: ['id', 'employment']
-        ,
+        attributes: ['id', 'employment'],
       },
     }));
   }
