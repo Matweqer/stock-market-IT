@@ -1,6 +1,6 @@
 export const requestStatuses = {
   created: 0,
-  found: 1,
-  executing: 2,
-  completed: 3,
+  viewed: 1,
+  rejected: 2,
+  accepted: 3,
 };

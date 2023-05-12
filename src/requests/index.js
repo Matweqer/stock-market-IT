@@ -7,3 +7,5 @@ export * from './createExecutor';
 export * from './updateExecutor';
 export * from './updateTask';
 export * from './createTask';
+export * from './createRequest';
+export * from './updateRequest';

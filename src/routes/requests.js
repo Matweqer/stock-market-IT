@@ -1,54 +1,55 @@
 import { Router } from 'express';
 
 import { wrap } from '../utils';
-import { ExecutorsController } from '../controllers';
+import { RequestsController } from '../controllers';
 import { roles } from '../constants';
 import { authenticateToken, validateRequest } from '../middlewares';
-import { updateExecutor, createExecutor } from '../requests';
+import { updateRequest, createRequest } from '../requests';
 
-const executorsRouter = Router();
+const requestsRouter = Router();
 
-executorsRouter
+requestsRouter
   .get(
     '/',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      const executors = await ExecutorsController.getExecutors();
-      res.json(executors);
+      const tasks = await RequestsController.getRequests();
+      res.json(tasks);
     }),
   )
   .post(
     '/',
-    validateRequest(createExecutor),
+    authenticateToken([roles.user, roles.admin]),
+    validateRequest(createRequest),
     wrap(async (req, res) => {
-      const executor = await ExecutorsController.createExecutor(req.body);
-      res.json(executor);
+      const task = await RequestsController.createRequest(req.body);
+      res.json(task);
     }),
   )
   .get(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      const executor = await ExecutorsController.getExecutorById(req.params);
-      res.json(executor);
+      const task = await RequestsController.getRequestById(req.params);
+      res.json(task);
     }),
   )
   .patch(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
-    validateRequest(updateExecutor),
+    validateRequest(updateRequest),
     wrap(async (req, res) => {
-      const executor = await ExecutorsController.updateExecutor(req);
-      res.json(executor);
+      const tasks = await RequestsController.updateRequest(req);
+      res.json(tasks);
     }),
   )
   .delete(
     '/:id',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      await ExecutorsController.deleteExecutor(req);
+      await RequestsController.deleteRequest(req);
       res.status(200).end();
     }),
   );
 
-export { executorsRouter };
+export { requestsRouter };

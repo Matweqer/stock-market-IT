@@ -37,4 +37,5 @@ export {
   Customer,
   Executor,
   Task,
+  Request,
 };
