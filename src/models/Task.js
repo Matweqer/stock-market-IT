@@ -2,10 +2,10 @@ import { DataTypes } from 'sequelize';
 import { v4 as uuid } from 'uuid';
 import BaseModel from './BaseModel';
 
-export default class Order extends BaseModel {
-  static modelName = 'order';
+export default class Task extends BaseModel {
+  static modelName = 'task';
 
-  static tableName = 'orders';
+  static tableName = 'tasks';
 
   static protectedKeys = ['createdAt', 'updatedAt'];
 
@@ -21,6 +21,9 @@ export default class Order extends BaseModel {
     cost: {
       type: DataTypes.INTEGER,
     },
+    description: {
+      type: DataTypes.INTEGER,
+    },
   };
 
   static Settings = {
@@ -32,17 +35,29 @@ export default class Order extends BaseModel {
   };
 
   static associate(models) {
-    Order.belongsTo(models.customer, {
+    Task.belongsTo(models.customer, {
       as: 'customer',
       foreignKey: {
         name: 'customerId',
       },
     });
-    Order.belongsTo(models.executor, {
-      as: 'executor',
-      foreignKey: {
-        name: 'executorId',
+    // Task.belongsTo(models.executor, {
+    //   as: 'executor',
+    //   foreignKey: {
+    //     name: 'executorId',
+    //   },
+    // });
+  }
+
+  static setupScopes(models) {
+    this.addScope('data', () => ({
+      attributes: ['id', 'status', 'description', 'cost'],
+      include: {
+        model: models.customer,
+        as: 'customer',
+        attributes: ['id', 'employment']
+        ,
       },
-    });
+    }));
   }
 }

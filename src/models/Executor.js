@@ -42,12 +42,12 @@ export default class Executor extends BaseModel {
         name: 'userId',
       },
     });
-    Executor.hasMany(models.order, {
-      as: 'order',
-      foreignKey: {
-        name: 'executorId',
-      },
-    });
+    // Executor.hasMany(models.order, {
+    //   as: 'order',
+    //   foreignKey: {
+    //     name: 'executorId',
+    //   },
+    // });
   }
 
   static setupScopes(models) {

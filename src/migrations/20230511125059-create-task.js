@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 export async function up(queryInterface) {
   const transaction = await queryInterface.sequelize.transaction();
   try {
-    await queryInterface.createTable('orders', {
+    await queryInterface.createTable('tasks', {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -18,22 +18,27 @@ export async function up(queryInterface) {
         },
         onDelete: 'SET NULL',
       },
-      executorId: {
-        type: DataTypes.UUID,
-        references: {
-          model: {
-            tableName: 'executors',
-          },
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-      },
+      // executorId: {
+      //   type: DataTypes.UUID,
+      //   references: {
+      //     model: {
+      //       tableName: 'executors',
+      //     },
+      //     key: 'id',
+      //   },
+      //   onDelete: 'SET NULL',
+      // },
       status: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       cost: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -52,7 +57,7 @@ export async function up(queryInterface) {
 export async function down(queryInterface) {
   const transaction = await queryInterface.sequelize.transaction();
   try {
-    await queryInterface.dropTable('orders', { transaction });
+    await queryInterface.dropTable('tasks', { transaction });
     await transaction.commit();
   } catch (err) {
     await transaction.rollback();

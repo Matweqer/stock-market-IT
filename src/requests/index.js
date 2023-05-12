@@ -5,3 +5,5 @@ export * from './updateCustomer';
 export * from './createCustomer';
 export * from './createExecutor';
 export * from './updateExecutor';
+export * from './updateTask';
+export * from './createTask';

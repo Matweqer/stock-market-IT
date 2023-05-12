@@ -35,8 +35,8 @@ export default class Customer extends BaseModel {
         name: 'userId',
       },
     });
-    Customer.hasMany(models.order, {
-      as: 'order',
+    Customer.hasMany(models.task, {
+      as: 'tasks',
       foreignKey: {
         name: 'customerId',
       },
