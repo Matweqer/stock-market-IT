@@ -56,6 +56,13 @@ export default class Task extends BaseModel {
         model: models.customer,
         as: 'customer',
         attributes: ['id', 'employment'],
+        include: {
+          model: models.user,
+          as: 'user',
+          attributes: ['id', 'name', 'secondName',
+            'phone', 'photo', 'email',
+          ],
+        },
       },
     }));
   }

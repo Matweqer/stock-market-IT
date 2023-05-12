@@ -1,8 +1,8 @@
 import { Forbidden, NotFound } from 'http-errors';
 import { Op } from 'sequelize';
 
-import { Request } from '../models';
-import { requestStatuses } from '../constants';
+import { Request, Task } from '../models';
+import { requestStatuses, taskStatuses } from '../constants';
 
 async function getRequests() {
   const requests = await Request.scope('data').findAll();
@@ -34,17 +34,24 @@ async function updateRequest(
   if (!request) throw new NotFound('no_request_in_base');
 
   if (status === requestStatuses.accepted) {
-    await Request.update(
-      { status: requestStatuses.rejected },
-      {
-        where: {
-          taskId,
-          // status: {
-          //   [Op.ne]: requestStatuses.accepted,
-          // },
+    await Promise.all([
+      Request.update(
+        { status: requestStatuses.rejected },
+        {
+          where: {
+            taskId,
+          },
         },
-      },
-    );
+      ),
+      Task.update(
+        { status: taskStatuses.found },
+        {
+          where: {
+            id: taskId,
+          },
+        },
+      ),
+    ]);
   }
   await request.update({ status });
   return request;
