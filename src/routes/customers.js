@@ -19,7 +19,6 @@ customersRouter
   )
   .post(
     '/',
-    authenticateToken([roles.user, roles.admin]),
     validateRequest(createCustomer),
     wrap(async (req, res) => {
       const customer = await CustomersController.createCustomer(req.body);
