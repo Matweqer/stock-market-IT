@@ -2,6 +2,8 @@ import { Forbidden, BadRequest } from 'http-errors';
 import { verifyToken } from '../utils';
 import { User } from '../models';
 
+import { config } from '../config';
+
 export function authenticateToken(allowedRoles = []) {
   return async (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -12,7 +14,7 @@ export function authenticateToken(allowedRoles = []) {
     }
 
     try {
-      req.user = verifyToken(token, process.env.JWT_SECRET_KEY);
+      req.user = verifyToken(token, config.JWT_SECRET_KEY);
     } catch (error) {
       next(error, null);
       return;
