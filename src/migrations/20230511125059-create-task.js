@@ -18,16 +18,6 @@ export async function up(queryInterface) {
         },
         onDelete: 'SET NULL',
       },
-      // executorId: {
-      //   type: DataTypes.UUID,
-      //   references: {
-      //     model: {
-      //       tableName: 'executors',
-      //     },
-      //     key: 'id',
-      //   },
-      //   onDelete: 'SET NULL',
-      // },
       status: {
         type: DataTypes.STRING,
         allowNull: false,

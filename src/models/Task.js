@@ -14,6 +14,10 @@ export default class Task extends BaseModel {
       type: DataTypes.UUID,
       primaryKey: true,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,6 +27,9 @@ export default class Task extends BaseModel {
     },
     description: {
       type: DataTypes.INTEGER,
+    },
+    img: {
+      type: DataTypes.STRING,
     },
   };
 
