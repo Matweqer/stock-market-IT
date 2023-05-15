@@ -17,6 +17,9 @@ app.use(express.urlencoded({
 app.use(cors());
 app.use(morgan('tiny'));
 
+app.use('/static/img', express.static('./src/static/img'));
+app.use('/static/cv', express.static('./src/static/cv'));
+
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/customers', customersRouter);

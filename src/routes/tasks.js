@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { wrap } from '../utils';
 import { TasksController } from '../controllers';
 import { roles } from '../constants';
-import { authenticateToken, validateRequest } from '../middlewares';
+import { authenticateToken, imgUploader, validateRequest } from '../middlewares';
 import { updateTask, createTask } from '../requests';
 
 const tasksRouter = Router();
@@ -20,9 +20,10 @@ tasksRouter
   .post(
     '/',
     authenticateToken([roles.user, roles.admin]),
+    imgUploader,
     validateRequest(createTask),
     wrap(async (req, res) => {
-      const task = await TasksController.createTask(req.body);
+      const task = await TasksController.createTask(req);
       res.json(task);
     }),
   )

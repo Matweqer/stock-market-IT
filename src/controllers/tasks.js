@@ -1,4 +1,4 @@
-import { Forbidden, NotFound } from 'http-errors';
+import { BadRequest, Forbidden, NotFound } from 'http-errors';
 import { Task } from '../models';
 import { taskStatuses } from '../constants';
 
@@ -8,13 +8,22 @@ async function getTasks() {
   return tasks;
 }
 
-// TODO находить ID заказчика по авторизованному пользователю
-async function createTask({ customerId, cost, description }) {
+async function createTask({
+  body: {
+    customerId, name, cost, description,
+  },
+  file: { filename },
+}) {
+  const taskToCheck = await Task.findOne({ where: { name, customerId } });
+  if (taskToCheck) throw new BadRequest(`Task with name ${name} already exist`);
+  const img = `/static/img/${filename}`;
   return await Task.create({
     customerId,
+    name,
     cost,
     description,
     status: taskStatuses.created,
+    img,
   });
 }
 
