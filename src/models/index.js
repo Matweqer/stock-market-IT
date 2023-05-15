@@ -24,7 +24,7 @@ Executor.associate(sequelize.models);
 Task.associate(sequelize.models);
 Request.associate(sequelize.models);
 
-User.setupScopes();
+User.setupScopes(sequelize.models);
 Customer.setupScopes(sequelize.models);
 Executor.setupScopes(sequelize.models);
 Task.setupScopes(sequelize.models);

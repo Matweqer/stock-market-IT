@@ -70,10 +70,20 @@ export default class User extends BaseModel {
     });
   }
 
-  static setupScopes() {
+  static setupScopes(models) {
     this.addScope('data', () => ({
       attributes: ['id', 'name', 'secondName',
         'phone', 'photo', 'email',
+      ],
+      include: [
+        {
+          model: models.customer,
+          as: 'customer',
+        },
+        {
+          model: models.executor,
+          as: 'executor',
+        },
       ],
     }));
   }
