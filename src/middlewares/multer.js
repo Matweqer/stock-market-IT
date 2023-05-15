@@ -39,11 +39,11 @@ const imgStorage = multer.diskStorage({
 
 const cvStorage = multer.diskStorage({
   destination: (req, res, cb) => {
-    cb(null, './static/cv');
+    cb(null, './src/static/cv');
   },
-  filename: ({ body: { executorId } }, { originalname }, cb) => {
+  filename: ({ params: { id } }, { originalname }, cb) => {
     const extension = path.extname(originalname).toLowerCase();
-    cb(null, executorId + extension);
+    cb(null, id + extension);
   },
 });
 

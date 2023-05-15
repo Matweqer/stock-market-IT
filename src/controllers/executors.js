@@ -38,6 +38,18 @@ async function updateExecutor(
   return executor;
 }
 
+async function putCv({ params: { id }, file: { filename } }) {
+  const executor = await Executor.scope('data').findByPk(id);
+  if (!executor) throw new NotFound('no_executor_in_base');
+  const cv = `/static/cv/${filename}`;
+
+  await executor.update({
+    cv,
+  });
+
+  return executor;
+}
+
 async function deleteExecutor({ params, user }) {
   const executorToDelete = await Executor.scope('data').findByPk(params.id);
   if (!executorToDelete) throw new NotFound('no_executor_in_base');
@@ -52,5 +64,6 @@ export {
   createExecutor,
   getExecutorById,
   updateExecutor,
+  putCv,
   deleteExecutor,
 };

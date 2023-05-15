@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { wrap } from '../utils';
 import { ExecutorsController } from '../controllers';
 import { roles } from '../constants';
-import { authenticateToken, validateRequest } from '../middlewares';
+import { authenticateToken, cvUploader, validateRequest } from '../middlewares';
 import { updateExecutor, createExecutor } from '../requests';
 
 const executorsRouter = Router();
@@ -39,6 +39,15 @@ executorsRouter
     validateRequest(updateExecutor),
     wrap(async (req, res) => {
       const executor = await ExecutorsController.updateExecutor(req);
+      res.json(executor);
+    }),
+  )
+  .put(
+    '/:id',
+    authenticateToken([roles.user, roles.admin]),
+    cvUploader,
+    wrap(async (req, res) => {
+      const executor = await ExecutorsController.putCv(req);
       res.json(executor);
     }),
   )
