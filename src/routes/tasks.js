@@ -13,7 +13,7 @@ tasksRouter
     '/',
     authenticateToken([roles.user, roles.admin]),
     wrap(async (req, res) => {
-      const tasks = await TasksController.getTasks();
+      const tasks = await TasksController.getTasks(req.query);
       res.json(tasks);
     }),
   )

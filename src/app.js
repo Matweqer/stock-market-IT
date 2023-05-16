@@ -5,6 +5,7 @@ import {
   authRouter, usersRouter,
   customersRouter, executorsRouter,
   tasksRouter, requestsRouter,
+  systemRouter,
 } from './routes';
 import { errorHandler } from './middlewares';
 
@@ -26,6 +27,8 @@ app.use('/api/customers', customersRouter);
 app.use('/api/executors', executorsRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/requests', requestsRouter);
+
+app.use('/api/system', systemRouter);
 
 app.use(errorHandler);
 

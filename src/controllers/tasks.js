@@ -1,16 +1,23 @@
 import { BadRequest, Forbidden, NotFound } from 'http-errors';
+import _ from 'lodash';
+import { Op } from 'sequelize';
+
 import { Task } from '../models';
 import { taskStatuses } from '../constants';
 
-async function getTasks() {
-  const tasks = await Task.scope('data').findAll();
+async function getTasks({ search, types }) {
+  const where = _.pickBy({
+    name: search ? { [Op.iLike]: `%${search}%` } : null,
+    type: types?.length ? { [Op.in]: types.split(', ') } : null,
+  });
+  const tasks = await Task.scope('data').findAll({ where });
   if (!tasks) throw new NotFound('no_tasks_in_base');
   return tasks;
 }
 
 async function createTask({
   body: {
-    customerId, name, cost, description,
+    customerId, name, cost, description, type,
   },
   file: { filename },
 }) {
@@ -23,6 +30,7 @@ async function createTask({
     cost,
     description,
     status: taskStatuses.created,
+    type,
     img,
   });
 }
@@ -36,7 +44,9 @@ async function getTaskById({ id }) {
 async function updateTask(
   {
     params: { id },
-    body: { cost, description, status },
+    body: {
+      cost, description, status, type,
+    },
   },
 ) {
   const task = await Task.scope('data').findByPk(id);
@@ -46,6 +56,7 @@ async function updateTask(
     cost,
     description,
     status,
+    type,
   });
 
   return task;

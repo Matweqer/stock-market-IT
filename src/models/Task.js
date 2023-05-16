@@ -22,6 +22,10 @@ export default class Task extends BaseModel {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     cost: {
       type: DataTypes.INTEGER,
     },
@@ -58,7 +62,7 @@ export default class Task extends BaseModel {
 
   static setupScopes(models) {
     this.addScope('data', () => ({
-      attributes: ['id', 'status', 'description', 'cost'],
+      attributes: ['id', 'status', 'description', 'cost', 'img', 'type', 'name'],
       include: {
         model: models.customer,
         as: 'customer',
