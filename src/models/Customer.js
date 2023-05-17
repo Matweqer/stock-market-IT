@@ -46,13 +46,22 @@ export default class Customer extends BaseModel {
   static setupScopes(models) {
     this.addScope('data', () => ({
       attributes: ['id', 'employment'],
-      include: {
-        model: models.user,
-        as: 'user',
-        attributes: ['id', 'name', 'secondName',
-          'phone', 'photo', 'email',
-        ],
-      },
+      include: [
+        {
+          model: models.user,
+          as: 'user',
+          attributes: ['id', 'name', 'secondName',
+            'phone', 'photo', 'email',
+          ],
+        },
+        {
+          model: models.task,
+          as: 'tasks',
+          attributes: ['id', 'status', 'description',
+            'cost', 'img', 'type', 'name',
+          ],
+        },
+      ],
     }));
   }
 }
