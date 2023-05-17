@@ -62,7 +62,7 @@ export default class Request extends BaseModel {
         {
           model: models.task,
           as: 'task',
-          attributes: ['id', 'status', 'description', 'cost'],
+          attributes: ['id', 'status', 'description', 'cost', 'img', 'type', 'name'],
           include: {
             model: models.customer,
             as: 'customer',
