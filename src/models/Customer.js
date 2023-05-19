@@ -60,6 +60,23 @@ export default class Customer extends BaseModel {
           attributes: ['id', 'status', 'description',
             'cost', 'img', 'type', 'name',
           ],
+          include: {
+            model: models.request,
+            as: 'requests',
+            attributes: ['id', 'status'],
+            include: {
+              model: models.executor,
+              as: 'executor',
+              attributes: ['id', 'experience', 'technologies', 'cv'],
+              include: {
+                model: models.user,
+                as: 'user',
+                attributes: ['id', 'name', 'secondName',
+                  'phone', 'photo', 'email',
+                ],
+              },
+            },
+          },
         },
       ],
     }));
